@@ -9,6 +9,7 @@ sequenceDiagram
     Note right of browser: - The new note is posted to the server with a timestamp <br> - The javascript dynamically renders the html with the new note added at the bottom.
 
     server-->>browser: Responds with 201 created status code.
+    deactivate server
 
    
     
