@@ -1,0 +1,14 @@
+## Loop using map
+
+const Total = (props) => {
+
+var total = 0
+
+props.content.map((partData) => (
+total += partData[1]
+))
+
+return(
+<p>Number of exercises {total}</p>
+)
+}
