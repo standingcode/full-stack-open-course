@@ -11,14 +11,12 @@ const Display = ({ title, buttons, feedbackTitle, feedback }) => {
   );
 };
 
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
-
 const CreateButtons = ({ buttons }) => {
   return (
     <div>
-      <Button onClick={buttons.button1Handler} text={buttons.button1Label} />
-      <Button onClick={buttons.button2Handler} text={buttons.button2Label} />
-      <Button onClick={buttons.button3Handler} text={buttons.button3Label} />
+      <button onClick={buttons.button1Handler}>{buttons.button1Label}</button>
+      <button onClick={buttons.button2Handler}>{buttons.button2Label}</button>
+      <button onClick={buttons.button3Handler}>{buttons.button3Label}</button>
     </div>
   );
 };
