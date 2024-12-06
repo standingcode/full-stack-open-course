@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-const Display = ({ title, buttons, feedbackTitle, feedback }) => {
+const Display = ({ title, buttons, StatisticsTitle, Statistics }) => {
   return (
     <>
       <h1>{title}</h1>
       <CreateButtons buttons={buttons} />
-      <h1>{feedbackTitle}</h1>
-      <CreateFeedbackDisplay feedback={feedback} />
+      <h1>{StatisticsTitle}</h1>
+      <CreateStatisticsDisplay Statistics={Statistics} />
     </>
   );
 };
@@ -21,15 +21,15 @@ const CreateButtons = ({ buttons }) => {
   );
 };
 
-const CreateFeedbackDisplay = ({ feedback }) => {
+const CreateStatisticsDisplay = ({ Statistics }) => {
   return (
     <div>
-      {feedback.goodLabel} {feedback.goodInt} <br></br>
-      {feedback.neutralLabel} {feedback.neutralInt} <br></br>
-      {feedback.badLabel} {feedback.badInt} <br></br>
-      {feedback.allLabel} {feedback.allInt} <br></br>
-      {feedback.averageLabel} {feedback.averageFloat} <br></br>
-      {feedback.positiveLabel} {feedback.positiveFloat} %
+      {Statistics.goodLabel} {Statistics.goodInt} <br></br>
+      {Statistics.neutralLabel} {Statistics.neutralInt} <br></br>
+      {Statistics.badLabel} {Statistics.badInt} <br></br>
+      {Statistics.allLabel} {Statistics.allInt} <br></br>
+      {Statistics.averageLabel} {Statistics.averageFloat} <br></br>
+      {Statistics.positiveLabel} {Statistics.positiveFloat} %
     </div>
   );
 };
@@ -43,8 +43,8 @@ const App = () => {
   const [average, setAverage] = useState(0);
   const [positive, setPositive] = useState(0);
 
-  const title = "Give feedback";
-  const feedbackTitle = "Statistics";
+  const title = "Give Statistics";
+  const StatisticsTitle = "Statistics";
 
   const setToValue = (handler, newValue) => {
     // console.log("value now", newValue);
@@ -84,7 +84,7 @@ const App = () => {
     button3Label: "bad",
   };
 
-  const feedback = {
+  const Statistics = {
     goodInt: good,
     goodLabel: "good",
     neutralInt: neutral,
@@ -104,8 +104,8 @@ const App = () => {
       <Display
         title={title}
         buttons={buttons}
-        feedbackTitle={feedbackTitle}
-        feedback={feedback}
+        StatisticsTitle={StatisticsTitle}
+        Statistics={Statistics}
       />
     </div>
   );
