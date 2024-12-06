@@ -22,6 +22,10 @@ const CreateButtonsDisplay = ({ buttons }) => {
 };
 
 const CreateStatisticsDisplay = ({ Statistics }) => {
+  if (Statistics.allInt === 0) {
+    return <div>No feedback given</div>;
+  }
+
   return (
     <div>
       {Statistics.goodLabel} {Statistics.goodInt} <br></br>
@@ -43,7 +47,7 @@ const App = () => {
   const [average, setAverage] = useState(0);
   const [positive, setPositive] = useState(0);
 
-  const title = "Give Statistics";
+  const title = "Give Feedback";
   const StatisticsTitle = "Statistics";
 
   const setToValue = (handler, newValue) => {
