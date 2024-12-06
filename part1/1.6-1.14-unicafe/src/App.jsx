@@ -4,14 +4,14 @@ const Display = ({ title, buttons, StatisticsTitle, Statistics }) => {
   return (
     <>
       <h1>{title}</h1>
-      <CreateButtons buttons={buttons} />
+      <CreateButtonsDisplay buttons={buttons} />
       <h1>{StatisticsTitle}</h1>
       <CreateStatisticsDisplay Statistics={Statistics} />
     </>
   );
 };
 
-const CreateButtons = ({ buttons }) => {
+const CreateButtonsDisplay = ({ buttons }) => {
   return (
     <div>
       <button onClick={buttons.button1Handler}>{buttons.button1Label}</button>
