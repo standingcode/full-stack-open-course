@@ -1,42 +1,53 @@
 import { useState } from "react";
 
-const Display = ({ title, buttons, StatisticsTitle, Statistics }) => {
+const Display = ({ title, buttons, StatisticsDataTitle, StatisticsData }) => {
   return (
     <>
       <h1>{title}</h1>
-      <CreateButtonsDisplay buttons={buttons} />
-      <h1>{StatisticsTitle}</h1>
-      <CreateStatisticsDisplay Statistics={Statistics} />
+      <Button handler={buttons.button1Handler} label={buttons.button1Label} />
+      <Button handler={buttons.button2Handler} label={buttons.button2Label} />
+      <Button handler={buttons.button3Handler} label={buttons.button3Label} />
+      <h1>{StatisticsDataTitle}</h1>
+      <Statistics StatisticsData={StatisticsData} />
     </>
   );
 };
 
-const CreateButtonsDisplay = ({ buttons }) => {
+const Button = ({ handler, label }) => {
   return (
-    <div>
-      <button onClick={buttons.button1Handler}>{buttons.button1Label}</button>
-      <button onClick={buttons.button2Handler}>{buttons.button2Label}</button>
-      <button onClick={buttons.button3Handler}>{buttons.button3Label}</button>
-    </div>
+    <>
+      <button onClick={handler}>{label}</button>
+    </>
   );
 };
 
-const CreateStatisticsDisplay = ({ Statistics }) => {
-  if (Statistics.allInt === 0) {
+const Statistics = ({ StatisticsData }) => {
+  if (StatisticsData.allInt === 0) {
     return <div>No feedback given</div>;
   }
 
   return (
     <div>
-      {Statistics.goodLabel} {Statistics.goodInt} <br></br>
-      {Statistics.neutralLabel} {Statistics.neutralInt} <br></br>
-      {Statistics.badLabel} {Statistics.badInt} <br></br>
-      {Statistics.allLabel} {Statistics.allInt} <br></br>
-      {Statistics.averageLabel} {Statistics.averageFloat} <br></br>
-      {Statistics.positiveLabel} {Statistics.positiveFloat} %
+      <StatisticLine text="good" value={StatisticsData.goodInt} />
+      <br></br>
+      <StatisticLine text="neutral" value={StatisticsData.neutralInt} />
+      <br></br>
+      <StatisticLine text="bad" value={StatisticsData.badInt} />
+      <br></br>
+      <StatisticLine text="all" value={StatisticsData.allInt} />
+      <br></br>
+      <StatisticLine text="average" value={StatisticsData.averageFloat} />
+      <br></br>
+      <StatisticLine text="positive" value={StatisticsData.positiveFloat} /> %
     </div>
   );
 };
+
+const StatisticLine = ({ text, value }) => (
+  <>
+    {text} {value}
+  </>
+);
 
 const App = () => {
   // save clicks of each button to its own state
@@ -48,7 +59,7 @@ const App = () => {
   const [positive, setPositive] = useState(0);
 
   const title = "Give Feedback";
-  const StatisticsTitle = "Statistics";
+  const StatisticsDataTitle = "StatisticsData";
 
   const setToValue = (handler, newValue) => {
     // console.log("value now", newValue);
@@ -88,19 +99,13 @@ const App = () => {
     button3Label: "bad",
   };
 
-  const Statistics = {
+  const StatisticsData = {
     goodInt: good,
-    goodLabel: "good",
     neutralInt: neutral,
-    neutralLabel: "neutral",
     badInt: bad,
-    badLabel: "bad",
     allInt: all,
-    allLabel: "all",
     averageFloat: average,
-    averageLabel: "average",
     positiveFloat: positive,
-    positiveLabel: "positive",
   };
 
   return (
@@ -108,8 +113,8 @@ const App = () => {
       <Display
         title={title}
         buttons={buttons}
-        StatisticsTitle={StatisticsTitle}
-        Statistics={Statistics}
+        StatisticsDataTitle={StatisticsDataTitle}
+        StatisticsData={StatisticsData}
       />
     </div>
   );
