@@ -6,4 +6,7 @@ cd introdemo
 
 npm install
 
+delete assets folder, .css files in src, Readme
+Can change info in index.html
+
 npm run devnpm
