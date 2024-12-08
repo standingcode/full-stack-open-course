@@ -27,8 +27,18 @@ const Statistics = ({ StatisticsData }) => {
   }
 
   return (
-    <div>
-      <StatisticLine text="good" value={StatisticsData.goodInt} />
+    <>
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={StatisticsData.goodInt} />
+          <StatisticLine text="neutral" value={StatisticsData.neutralInt} />
+          <StatisticLine text="bad" value={StatisticsData.badInt} />
+          <StatisticLine text="all" value={StatisticsData.allInt} />
+          <StatisticLine text="average" value={StatisticsData.averageFloat} />
+          <StatisticLine text="positive" value={StatisticsData.positiveFloat} />
+        </tbody>
+      </table>
+      {/* <StatisticLine text="good" value={StatisticsData.goodInt} />
       <br></br>
       <StatisticLine text="neutral" value={StatisticsData.neutralInt} />
       <br></br>
@@ -38,15 +48,16 @@ const Statistics = ({ StatisticsData }) => {
       <br></br>
       <StatisticLine text="average" value={StatisticsData.averageFloat} />
       <br></br>
-      <StatisticLine text="positive" value={StatisticsData.positiveFloat} /> %
-    </div>
+      <StatisticLine text="positive" value={StatisticsData.positiveFloat} /> % */}
+    </>
   );
 };
 
 const StatisticLine = ({ text, value }) => (
-  <>
-    {text} {value}
-  </>
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 );
 
 const App = () => {
