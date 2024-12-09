@@ -4,10 +4,20 @@ const RandomNumberGenerator = ({ maxNumberInclusive }) => {
   return Math.floor(Math.random() * (maxNumberInclusive + 1));
 };
 
-const DisplayRandomAnecdote = ({ text }) => {
+const ReturnHighestVotedAnecdote = ({ anecdotes }) => {
+  if (anecdotes === undefined || anecdotes.every((item) => item === 0)) {
+    return -1;
+  }
+
+  const highestVotedAnecdoteIndex = anecdotes.indexOf(Math.max(...anecdotes));
+  return highestVotedAnecdoteIndex;
+};
+
+const DisplayAnecdote = ({ text, numberOfVotes }) => {
   return (
     <div>
       <p>{text}</p>
+      <p>Has {numberOfVotes} votes</p>
     </div>
   );
 };
@@ -20,7 +30,7 @@ const App = () => {
     "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
     "Premature optimization is the root of all evil.",
     "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
-    "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.",
+    "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood anecdotess when diagnosing patients.",
     "The only way to go fast, is to go well.",
   ];
 
@@ -28,9 +38,33 @@ const App = () => {
     RandomNumberGenerator({ maxNumberInclusive: anecdotes.length - 1 })
   );
 
+  const [highestVotedIndex, setHighestVotedIndex] = useState(
+    "No votes have been cast"
+  );
+
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
+
+  const handleVote = () => {
+    const copy = [...points];
+    copy[selected] += 1;
+    setPoints(copy);
+
+    const indexOfHighestVotedAnecdote = ReturnHighestVotedAnecdote({
+      anecdotes: copy,
+    });
+
+    setHighestVotedIndex(indexOfHighestVotedAnecdote);
+
+    console.log(copy);
+  };
+
   return (
     <div>
-      <DisplayRandomAnecdote text={anecdotes[selected]} />
+      <h1>Anecdote of the day</h1>
+      <DisplayAnecdote
+        text={anecdotes[selected]}
+        numberOfVotes={points[selected]}
+      />
       <button
         onClick={() =>
           setSelected(
@@ -40,6 +74,15 @@ const App = () => {
       >
         Next Anecdote
       </button>
+      <button onClick={() => handleVote(points)}>Vote</button>
+      <h1>Anedote with most votes</h1>
+      <DisplayAnecdote
+        text={
+          highestVotedIndex >= 0
+            ? anecdotes[highestVotedIndex]
+            : "No votes have been cast"
+        }
+      />
     </div>
   );
 };
