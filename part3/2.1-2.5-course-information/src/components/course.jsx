@@ -5,8 +5,8 @@ const Course = ({ course }) => {
   );
 
   return (
-    <div>
-      <h1>{course.name}</h1>
+    <>
+      <h2>{course.name}</h2>
       {course.parts.map((part) => (
         <p key={part.id}>
           {part.name} {part.exercises}
@@ -17,8 +17,18 @@ const Course = ({ course }) => {
           <b>total of {totalExercises} exercises</b>
         </p>
       }
-    </div>
+    </>
   );
 };
 
-export default Course;
+const Courses = ({ courses }) => {
+  return (
+    <>
+      {courses.map((course) => (
+        <Course key={course.id} course={course} />
+      ))}
+    </>
+  );
+};
+
+export default Courses;
