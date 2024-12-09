@@ -1,6 +1,6 @@
 ### Creating React project ###
 
-npm create vite@latest introdemo -- --template react
+npm create vite@latest 2.6-2.10-phonebook -- --template react
 
 cd introdemo
 
