@@ -22,9 +22,35 @@ const App = () => {
   const addNameInputFieldSubmitted = (event) => {
     event.preventDefault();
 
-    if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
+    const existingPerson = persons.find((person) => person.name === newName);
+
+    if (existingPerson !== undefined) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, would you like to update the number?`
+        )
+      ) {
+        console.log("Update the number");
+
+        const updatePersonObject = { ...existingPerson, number: newNumber };
+
+        noteService
+          .update(existingPerson.id, updatePersonObject)
+          .then((responseDataObject) => {
+            setPersons(
+              persons
+                .filter((person) => person.id !== existingPerson.id)
+                .concat(responseDataObject)
+            );
+          })
+          .catch((error) => {
+            alert(`Something went wrong with the update: ${error}`);
+          });
+
+        return;
+      } else {
+        return;
+      }
     }
 
     const newNameObject = {
