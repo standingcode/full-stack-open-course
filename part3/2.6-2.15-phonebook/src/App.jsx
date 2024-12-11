@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import FilteredResults from "./components/FilteredResults";
 import AddUserForm from "./components/AddUserForm";
-import FilterSearchBox from "./components/FilterSearchBox.jsx";
+import FilterSearchBox from "./components/FilterSearchBox";
+import noteService from "./services/Persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -30,27 +30,34 @@ const App = () => {
     const newNameObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
 
-    setPersons(persons.concat(newNameObject));
-    setNewName("");
-    setNewNumber("");
+    noteService
+      .create(newNameObject)
+      .then((newContactFromServer) => {
+        setPersons(persons.concat(newContactFromServer));
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        alert(`Contact could not be added: ${error}`);
+      });
   };
 
   const filterFieldChanged = (event) => {
     setFilter(event.target.value);
   };
 
-  const hook = () => {
-    console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
-    });
-  };
-
-  useEffect(hook, []);
+  useEffect(() => {
+    noteService
+      .getAll()
+      .then((initialData) => {
+        setPersons(initialData);
+      })
+      .catch((error) => {
+        alert(`List of contacts could not be loaded: ${error}`);
+      });
+  }, []);
 
   return (
     <div>
