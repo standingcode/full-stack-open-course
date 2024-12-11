@@ -1,6 +1,6 @@
 import DisplayResults from "./DisplayResults.jsx";
 
-const FilteredResults = ({ persons, filter }) => {
+const FilteredResults = ({ persons, filter, deleteCallback }) => {
   if (filter === undefined) {
     filter = "";
   }
@@ -13,7 +13,13 @@ const FilteredResults = ({ persons, filter }) => {
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  return <DisplayResults key={"persons"} persons={filteredPersons} />;
+  return (
+    <DisplayResults
+      key={"persons"}
+      persons={filteredPersons}
+      deleteCallback={deleteCallback}
+    />
+  );
 };
 
 export default FilteredResults;

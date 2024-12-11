@@ -1,13 +1,18 @@
-const DisplayResults = ({ persons }) => {
+const DisplayResults = ({ persons, deleteCallback }) => {
   return persons.map((person) => (
-    <DisplaySingleResult person={person} key={person.id} />
+    <DisplaySingleResult
+      person={person}
+      key={person.id}
+      deleteCallback={deleteCallback}
+    />
   ));
 };
 
-const DisplaySingleResult = ({ person }) => {
+const DisplaySingleResult = ({ person, deleteCallback }) => {
   return (
     <div key={person.name}>
-      {person.name} {person.number}
+      {person.name} {person.number}{" "}
+      <button onClick={() => deleteCallback(person.id)}>DELETE</button>
     </div>
   );
 };

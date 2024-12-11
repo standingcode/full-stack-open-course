@@ -44,6 +44,29 @@ const App = () => {
       });
   };
 
+  const deleteContactButtonPressed = (id) => {
+    // console.log(`Delete contact id: ${id}`);
+
+    if (
+      window.confirm(
+        `Are you sure you want to delete ${
+          persons.find((person) => person.id === id).name
+        }`
+      )
+    ) {
+      noteService
+        .remove(id)
+        .then((deletedPersonObject) => {
+          setPersons(
+            persons.filter((person) => person.id !== deletedPersonObject.id)
+          );
+        })
+        .catch((error) => {
+          alert(`Something went wrong with the deletion: ${error}`);
+        });
+    }
+  };
+
   const filterFieldChanged = (event) => {
     setFilter(event.target.value);
   };
@@ -75,7 +98,11 @@ const App = () => {
         addNameInputFieldSubmitted={addNameInputFieldSubmitted}
       />
       <h2>Numbers</h2>
-      <FilteredResults persons={persons} filter={filter} />
+      <FilteredResults
+        persons={persons}
+        filter={filter}
+        deleteCallback={deleteContactButtonPressed}
+      />
     </div>
   );
 };
