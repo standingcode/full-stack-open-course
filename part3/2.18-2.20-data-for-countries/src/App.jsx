@@ -6,12 +6,17 @@ import Notification from "./components/Notifications";
 
 const App = () => {
   const [allCountries, setAllCountries] = useState(null);
+  const [filteredCountries, setFilteredCountries] = useState(null);
   const [filter, setFilter] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const [informationMessage, setinformationMessage] = useState(null);
 
   const filterFieldChanged = (event) => {
     setFilter(event.target.value);
+  };
+
+  const pressToShowCountryButtonPressed = (id) => {
+    console.log(id);
+    // setFilter();
   };
 
   useEffect(() => {
@@ -32,12 +37,15 @@ const App = () => {
     <div>
       <h1>Amazing Country Information Page</h1>
       <Notification message={errorMessage} type="error" />
-      <Notification message={informationMessage} type="information" />
       <FilterSearchBox
         filter={filter}
         filterFieldChanged={filterFieldChanged}
       />
-      <FilteredResults countries={allCountries} filter={filter} />
+      <FilteredResults
+        countries={allCountries}
+        filter={filter}
+        displayCountryButtonCallback={pressToShowCountryButtonPressed}
+      />
     </div>
   );
 };

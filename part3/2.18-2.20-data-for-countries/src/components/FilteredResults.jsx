@@ -1,4 +1,11 @@
-const FilteredResults = ({ countries, filter }) => {
+import DisplayFullCountryResult from "./DisplayFullCountryResult";
+import DisplayResults from "./DisplayResults";
+
+const FilteredResults = ({
+  countries,
+  filter,
+  displayCountryButtonCallback,
+}) => {
   // If countries is undefined or null, just return a blank element
   if (countries === undefined || countries === null) {
     return <></>;
@@ -38,47 +45,11 @@ const FilteredResults = ({ countries, filter }) => {
   // Return the filtered results
   return (
     <>
-      <DisplayResults results={filteredCountries} />
+      <DisplayResults
+        results={filteredCountries}
+        displayCountryButtonCallback={displayCountryButtonCallback}
+      />
     </>
-  );
-};
-
-const DisplayResults = ({ results }) => {
-  return results.map((country) => (
-    <DisplaySingleResult
-      key={country.ccn2 + country.ccn3}
-      countryName={country.name}
-    />
-  ));
-};
-
-const DisplaySingleResult = ({ countryName }) => {
-  return (
-    <div>
-      {countryName.common} ({countryName.official})
-      {/* <button onClick={() => deleteCallback(person.id)}>DELETE</button> */}
-    </div>
-  );
-};
-
-const DisplayFullCountryResult = ({ country }) => {
-  return (
-    <div>
-      <h2>
-        {country.name.common} ({country.name.official})
-      </h2>
-
-      <div>Capital {country.capital}</div>
-      <div>Area {country.area}</div>
-
-      <h2>languages:</h2>
-      <p>
-        {Object.values(country.languages).map((language) => (
-          <li key={language}>{language}</li>
-        ))}
-      </p>
-      <img src={country.flags.svg} width="200" />
-    </div>
   );
 };
 
