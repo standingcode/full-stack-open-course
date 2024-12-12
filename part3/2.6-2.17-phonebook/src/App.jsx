@@ -24,12 +24,14 @@ const App = () => {
   const addNameInputFieldSubmitted = (event) => {
     event.preventDefault();
 
-    const existingPerson = persons.find((person) => person.name === newName);
+    const existingPerson = persons.find(
+      (person) => person.name.toLowerCase() === newName.toLowerCase()
+    );
 
     if (existingPerson !== undefined) {
       if (
         window.confirm(
-          `${newName} is already added to phonebook, would you like to update the number?`
+          `${newName.toLowerCase()} is already added to phonebook, would you like to update the number?`
         )
       ) {
         const updatePersonObject = { ...existingPerson, number: newNumber };
@@ -51,9 +53,19 @@ const App = () => {
             }, 5000);
           })
           .catch((error) => {
-            setErrorMessage(
-              `Something went wrong with the update for '${newName}': ${error}`
-            );
+            if (error.status === 404) {
+              setErrorMessage(
+                `'${newName}' has already been removed from the server`
+              );
+              setPersons(
+                persons.filter((person) => person.id !== existingPerson.id)
+              );
+            } else {
+              setErrorMessage(
+                `Something went wrong with the update for '${newName}': ${error}`
+              );
+            }
+
             setTimeout(() => {
               setErrorMessage(null);
             }, 5000);
