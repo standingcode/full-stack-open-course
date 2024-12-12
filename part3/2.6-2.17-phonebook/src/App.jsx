@@ -7,11 +7,11 @@ import Notification from "./components/Notifications";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
-  const [errorMessage, setErrorMessage] = useState("some error happened...");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [informationMessage, setinformationMessage] = useState(null);
 
   const addNameInputFieldChanged = (event) => {
     setNewName(event.target.value);
@@ -32,8 +32,6 @@ const App = () => {
           `${newName} is already added to phonebook, would you like to update the number?`
         )
       ) {
-        console.log("Update the number");
-
         const updatePersonObject = { ...existingPerson, number: newNumber };
 
         noteService
@@ -44,13 +42,30 @@ const App = () => {
                 .filter((person) => person.id !== existingPerson.id)
                 .concat(responseDataObject)
             );
+
+            setinformationMessage(
+              `'${newName}' was updated with the number ${newNumber}`
+            );
+            setTimeout(() => {
+              setinformationMessage(null);
+            }, 5000);
           })
           .catch((error) => {
-            alert(`Something went wrong with the update: ${error}`);
+            setErrorMessage(
+              `Something went wrong with the update for '${newName}': ${error}`
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
           });
+
+        setNewName("");
+        setNewNumber("");
 
         return;
       } else {
+        setNewName("");
+        setNewNumber("");
         return;
       }
     }
@@ -64,22 +79,35 @@ const App = () => {
       .create(newNameObject)
       .then((newContactFromServer) => {
         setPersons(persons.concat(newContactFromServer));
+
+        setinformationMessage(
+          `'${newName}' was added with the number ${newNumber}`
+        );
+        setTimeout(() => {
+          setinformationMessage(null);
+        }, 5000);
+
         setNewName("");
         setNewNumber("");
       })
       .catch((error) => {
-        alert(`Contact could not be added: ${error}`);
+        setErrorMessage(
+          `The contact '${newName}' could not be added: ${error}`
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
       });
   };
 
   const deleteContactButtonPressed = (id) => {
-    // console.log(`Delete contact id: ${id}`);
+    const nameOfPersonToBeDeleted = persons.find(
+      (person) => person.id === id
+    ).name;
 
     if (
       window.confirm(
-        `Are you sure you want to delete ${
-          persons.find((person) => person.id === id).name
-        }`
+        `Are you sure you want to delete ${nameOfPersonToBeDeleted}`
       )
     ) {
       noteService
@@ -88,9 +116,21 @@ const App = () => {
           setPersons(
             persons.filter((person) => person.id !== deletedPersonObject.id)
           );
+
+          setinformationMessage(
+            `'${deletedPersonObject.name}' was deleted from the phonebook`
+          );
+          setTimeout(() => {
+            setinformationMessage(null);
+          }, 5000);
         })
         .catch((error) => {
-          alert(`Something went wrong with the deletion: ${error}`);
+          setErrorMessage(
+            `The contact '${nameOfPersonToBeDeleted}' could not be deleted: ${error}`
+          );
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
         });
     }
   };
@@ -106,13 +146,18 @@ const App = () => {
         setPersons(initialData);
       })
       .catch((error) => {
-        alert(`List of contacts could not be loaded: ${error}`);
+        setErrorMessage(`The list of contacts could not be loaded: ${error}`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
       });
   }, []);
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} type="error" />
+      <Notification message={informationMessage} type="information" />
       <FilterSearchBox
         filter={filter}
         filterFieldChanged={filterFieldChanged}
