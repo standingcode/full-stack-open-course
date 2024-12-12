@@ -3,6 +3,7 @@ import FilteredResults from "./components/FilteredResults";
 import AddUserForm from "./components/AddUserForm";
 import FilterSearchBox from "./components/FilterSearchBox";
 import noteService from "./services/Persons";
+import Notification from "./components/Notifications";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -10,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
+  const [errorMessage, setErrorMessage] = useState("some error happened...");
 
   const addNameInputFieldChanged = (event) => {
     setNewName(event.target.value);
