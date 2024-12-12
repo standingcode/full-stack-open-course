@@ -6,7 +6,7 @@ const DisplayFullCountryResult = ({ country }) => {
       </h2>
 
       <div>Capital {country.capital}</div>
-      <div>Area {country.area}</div>
+      <div>Area {country.area} km2</div>
 
       <h2>languages:</h2>
       <p>

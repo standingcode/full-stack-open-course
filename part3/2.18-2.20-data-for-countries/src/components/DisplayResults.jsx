@@ -1,9 +1,14 @@
 import DisplayFullCountryResult from "./DisplayFullCountryResult";
 
-const DisplayResults = ({ filter, results, displayCountryButtonCallback }) => {
+const DisplayResults = ({
+  filter,
+  filteredCountries,
+  allCountries,
+  displayCountryButtonCallback,
+}) => {
   // If countries is undefined or null, just return a blank element
-  if (results === undefined || results === null || results.length === 0) {
-    return [];
+  if (allCountries === null) {
+    return <p>Data loading...</p>;
   }
 
   // If the filter is a blank string, request the user to enter a search
@@ -13,13 +18,17 @@ const DisplayResults = ({ filter, results, displayCountryButtonCallback }) => {
     );
   }
 
-  if (results.length === 1) {
-    return <DisplayFullCountryResult country={results[0]} />;
+  if (filteredCountries.length === 0) {
+    return <p>No countries matched the search</p>;
+  } else if (filteredCountries.length === 1) {
+    return <DisplayFullCountryResult country={filteredCountries[0]} />;
+  } else if (filteredCountries.length > 10) {
+    return <p>Too many matches, specify another filter</p>;
   } else {
     return (
-      <table key="coutryResultsTable">
+      <table key="coutryfilteredCountriesTable">
         <tbody>
-          {results.map((country) => (
+          {filteredCountries.map((country) => (
             <DisplaySingleResult
               key={country.cca2 + country.ccn3}
               id={country.cca2 + country.ccn3}

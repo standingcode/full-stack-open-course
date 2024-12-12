@@ -6,19 +6,22 @@ import Notification from "./components/Notifications";
 
 const App = () => {
   const [allCountries, setAllCountries] = useState(null);
-  const [filteredCountries, setFilteredCountries] = useState(null);
+  const [filteredCountries, setFilteredCountries] = useState([]);
   const [filter, setFilter] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const filterFieldChanged = (event) => {
-    setFilter(event.target.value);
+    const filterValue = event.target.value;
+    setFilter(filterValue);
 
     // Apply the filter
     setFilteredCountries(
       allCountries.filter(
         (country) =>
-          country.name.official.toLowerCase().includes(filter.toLowerCase()) ||
-          country.name.common.toLowerCase().includes(filter.toLowerCase())
+          country.name.official
+            .toLowerCase()
+            .includes(filterValue.toLowerCase()) ||
+          country.name.common.toLowerCase().includes(filterValue.toLowerCase())
       )
     );
   };
@@ -45,8 +48,6 @@ const App = () => {
       });
   }, []);
 
-  console.log("Refreshed");
-
   return (
     <div>
       <h1>Amazing Country Information Page</h1>
@@ -57,7 +58,8 @@ const App = () => {
       />
       <DisplayResults
         filter={filter}
-        results={filteredCountries}
+        filteredCountries={filteredCountries}
+        allCountries={allCountries}
         displayCountryButtonCallback={pressToShowCountryButtonPressed}
       />
     </div>
