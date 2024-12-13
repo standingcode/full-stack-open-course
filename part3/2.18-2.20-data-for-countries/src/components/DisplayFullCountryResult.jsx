@@ -25,7 +25,7 @@ const DisplayFullCountryResult = ({ country }) => {
         {country.name.common} ({country.name.official})
       </h2>
 
-      <div>Capital {country.capital}</div>
+      <div>Capital {country.capital[0]}</div>
       <div>Area {country.area} km2</div>
 
       <h2>languages:</h2>
@@ -35,7 +35,7 @@ const DisplayFullCountryResult = ({ country }) => {
         ))}
       </p>
       <img src={country.flags.svg} width="200" />
-      <DisplayWeather weather={weatherInfo} capital={country.capital} />
+      <DisplayWeather weather={weatherInfo} capital={country.capital[0]} />
     </div>
   );
 };

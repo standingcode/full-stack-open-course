@@ -8,7 +8,12 @@ const DisplayWeather = ({ weather, capital }) => {
   return (
     <>
       <h1>Weather in {capital}</h1>
-      <div>{weather.main.temp}</div>
+      <div>Temperature {weather.main.temp} Celcius</div>
+      <img
+        src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+        width="200"
+      />
+      <div>Wind {weather.wind.speed} m/s</div>
     </>
   );
 };
