@@ -27,13 +27,13 @@ Note.find({ important: true }).then((result) => {
   mongoose.connection.close();
 });
 
-// const note = new Note({
-//   content: "HTML is annoying",
-//   important: false,
-// });
+const note = new Note({
+  content: "HTML is annoying",
+  important: false,
+});
 
-// note.save().then((result) => {
-//   console.log("note saved!");
-//   console.log(result);
-//   mongoose.connection.close();
-// });
+note.save().then((result) => {
+  console.log("note saved!");
+  console.log(result);
+  mongoose.connection.close();
+});
