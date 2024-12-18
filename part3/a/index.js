@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 
 app.use(cors());
+app.use(express.static("dist"));
 app.use(express.json());
 
 let notes = [
@@ -22,10 +23,6 @@ let notes = [
     important: true,
   },
 ];
-
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
 
 app.get("/api/notes", (request, response) => {
   response.json(notes);
@@ -50,6 +47,12 @@ const generateId = () => {
 
 app.post("/api/notes", (request, response) => {
   const body = request.body;
+
+  if (!body) {
+    return response.status(400).json({
+      error: "body is bloody undefined????!?",
+    });
+  }
 
   if (!body.content) {
     return response.status(400).json({
