@@ -14,7 +14,7 @@ const DisplayResults = ({
   // If the filter is a blank string, request the user to enter a search
   if (filter === "") {
     return (
-      <p>Enter a search into the &quot;Find countries&quot; filter box </p>
+      <p>Start typing into the &quot;Search&quot; box to search and filter </p>
     );
   }
 
@@ -23,7 +23,7 @@ const DisplayResults = ({
   } else if (filteredCountries.length === 1) {
     return <DisplayFullCountryResult country={filteredCountries[0]} />;
   } else if (filteredCountries.length > 10) {
-    return <p>Too many matches, specify another filter</p>;
+    return <p>Over 10 matches, keep typing to narrow the results...</p>;
   } else {
     return (
       <table key="coutryfilteredCountriesTable">

@@ -1,7 +1,7 @@
 const FilterSearchBox = ({ filter, filterFieldChanged }) => {
   return (
     <div>
-      Filter results
+      Search&nbsp;          
       <input value={filter} onChange={filterFieldChanged} />
     </div>
   );
